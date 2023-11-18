@@ -20,8 +20,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, UITextFieldDelegate {
     
     let shapes = ["Language":"a circle.", "Support":"a heart.", "Freeform": "anything you want!"]
     
+    var drawView: UIView!
+    var lastPoint: CGPoint?
+    
+    /*
+    
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
-        print("tap")
             let location = gesture.location(in: sceneView)
             let hitTestResults = sceneView.hitTest(location, types: .featurePoint)
             
@@ -38,6 +42,38 @@ class ViewController: UIViewController, ARSCNViewDelegate, UITextFieldDelegate {
                 sceneView.scene.rootNode.addChildNode(node)
             }
         }
+     
+     */
+    
+    @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+        let currentPoint = gesture.location(in: drawView)
+
+        switch gesture.state {
+        case .began:
+            lastPoint = currentPoint
+            drawLineFrom(lastPoint: currentPoint, toPoint: currentPoint)
+        case .changed:
+            guard let last = lastPoint else { return }
+                        drawLineFrom(lastPoint: last, toPoint: currentPoint)
+                        lastPoint = currentPoint
+        default:
+            lastPoint = nil
+        }
+    }
+    
+    func drawLineFrom(lastPoint: CGPoint, toPoint: CGPoint) {
+            let path = UIBezierPath()
+            path.move(to: lastPoint)
+            path.addLine(to: toPoint)
+
+            let shapeLayer = CAShapeLayer()
+            shapeLayer.path = path.cgPath
+            shapeLayer.strokeColor = UIColor.black.cgColor
+            shapeLayer.lineWidth = 2.0
+
+            drawView.layer.addSublayer(shapeLayer)
+        }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,14 +81,21 @@ class ViewController: UIViewController, ARSCNViewDelegate, UITextFieldDelegate {
         sceneView = ARSCNView(frame: view.bounds)
         view.addSubview(sceneView)
         
+        drawView = UIView(frame: view.bounds)
+        view.addSubview(drawView)
+        
         // Set the view's delegate
         sceneView.delegate = self
         
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = false
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-        sceneView.addGestureRecognizer(tapGesture)
+        //let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        //drawView.addGestureRecognizer(tapGesture)
+        
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        longPressGesture.minimumPressDuration = 0.1
+        drawView.addGestureRecognizer(longPressGesture)
         
         // Create a new scene
         let scene = SCNScene()
