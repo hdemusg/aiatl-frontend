@@ -18,6 +18,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, UITextFieldDelegate {
     
     let textField = UITextField()
     
+    let clearButton = UIButton()
+    let submitButton = UIButton()
+    
     let shapes = ["Language":"a circle.", "Support":"a heart.", "Freeform": "anything you want!"]
     
     var drawView: UIView!
@@ -61,6 +64,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, UITextFieldDelegate {
         }
     }
     
+    @objc func clearButtonTapped(_ sender: UIButton) {
+            // Action for the red button tap
+            drawView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+        }
+
+    @objc func submitButtonTapped(_ sender: UIButton) {
+            // Action for the green button tap
+             print(textField.value)
+        }
+    
     func drawLineFrom(lastPoint: CGPoint, toPoint: CGPoint) {
             let path = UIBezierPath()
             path.move(to: lastPoint)
@@ -68,7 +81,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UITextFieldDelegate {
 
             let shapeLayer = CAShapeLayer()
             shapeLayer.path = path.cgPath
-            shapeLayer.strokeColor = UIColor.black.cgColor
+            shapeLayer.strokeColor = UIColor.red.cgColor
             shapeLayer.lineWidth = 2.0
 
             drawView.layer.addSublayer(shapeLayer)
@@ -94,14 +107,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, UITextFieldDelegate {
         //drawView.addGestureRecognizer(tapGesture)
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-        longPressGesture.minimumPressDuration = 0.1
+        longPressGesture.minimumPressDuration = 0.03
         drawView.addGestureRecognizer(longPressGesture)
         
         // Create a new scene
         let scene = SCNScene()
         
-        let button = UIButton(primaryAction: nil)
-
+        // let button = UIButton(primaryAction: nil)
+        
+        /*
         let actionClosure = { (action: UIAction) in
             print(self.shapes[action.title] ?? "question mark")
         }
@@ -109,21 +123,25 @@ class ViewController: UIViewController, ARSCNViewDelegate, UITextFieldDelegate {
         let submit = { (action: UIAction) in
             print("Submitting")
         }
+         */
         
-        var menuChildren: [UIMenuElement] = []
-        for option in options {
-            menuChildren.append(UIAction(title: option, handler: actionClosure))
-        }
-            
-        button.menu = UIMenu(options: .displayInline, children: menuChildren)
+        /*
+         var menuChildren: [UIMenuElement] = []
+         for option in options {
+             menuChildren.append(UIAction(title: option, handler: actionClosure))
+         }
+             
+         button.menu = UIMenu(options: .displayInline, children: menuChildren)
+         
+         button.showsMenuAsPrimaryAction = true
+         button.changesSelectionAsPrimaryAction = true
+             
+         button.frame = CGRect(x: 150, y: 200, width: 100, height: 40)
+         self.view.addSubview(button)
+         */
         
-        button.showsMenuAsPrimaryAction = true
-        button.changesSelectionAsPrimaryAction = true
-            
-        button.frame = CGRect(x: 150, y: 200, width: 100, height: 40)
-        self.view.addSubview(button)
         
-        textField.placeholder = "Enter text"
+        textField.placeholder = "Name your creation!"
         textField.borderStyle = .roundedRect
         textField.delegate = self // Set the delegate if you want to handle text field events
          
@@ -131,11 +149,39 @@ class ViewController: UIViewController, ARSCNViewDelegate, UITextFieldDelegate {
         
         textField.translatesAutoresizingMaskIntoConstraints = false
                 NSLayoutConstraint.activate([
-                    textField.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+                    textField.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
                     textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
                     textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
                     textField.heightAnchor.constraint(equalToConstant: 40)
                 ])
+        
+        clearButton.setTitle("clear", for: .normal)
+        
+        self.view.addSubview(clearButton)
+        
+        let buttonWidth: CGFloat = 100
+        let buttonHeight: CGFloat = 40
+        
+        let clearButton = UIButton(type: .system)
+        clearButton.frame = CGRect(x: 20, y: 90, width: buttonWidth, height: buttonHeight)
+        clearButton.setTitle("Clear", for: .normal)
+        clearButton.setTitleColor(.white, for: .normal)
+        clearButton.backgroundColor = .red
+        clearButton.layer.cornerRadius = 5 // To make the button corners rounded
+        
+        let submitButton = UIButton(type: .system)
+        submitButton.frame = CGRect(x: 130, y: 90, width: buttonWidth, height: buttonHeight)
+        submitButton.setTitle("Submit", for: .normal)
+        submitButton.setTitleColor(.white, for: .normal)
+        submitButton.backgroundColor = .systemGreen
+        submitButton.layer.cornerRadius = 5 // To make the button corners rounded
+
+        // Add an action to the button (you can define the action method below)
+        clearButton.addTarget(self, action: #selector(clearButtonTapped(_:)), for: .touchUpInside)
+        submitButton.addTarget(self, action: #selector(clearButtonTapped(_:)), for: .touchUpInside)
+        
+        self.view.addSubview(clearButton)
+        self.view.addSubview(submitButton)
         
         // let submitButton = UIButton(primaryAction: submit())
         
