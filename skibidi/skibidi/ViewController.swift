@@ -5,29 +5,57 @@
 //  Created by Sumedh Garimella on 11/17/23.
 //
 
+import SwiftUI
 import UIKit
 import SceneKit
 import ARKit
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, UITextFieldDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
     
     let options = ["Language", "Support", "Freeform"]
     
+    let textField = UITextField()
+    
     let shapes = ["Language":"a circle.", "Support":"a heart.", "Freeform": "anything you want!"]
+    
+    @objc func handleTap(_ gesture: UITapGestureRecognizer) {
+        print("tap")
+            let location = gesture.location(in: sceneView)
+            let hitTestResults = sceneView.hitTest(location, types: .featurePoint)
+            
+            if let hitResult = hitTestResults.first {
+                let position = SCNVector3(hitResult.worldTransform.columns.3.x,
+                                          hitResult.worldTransform.columns.3.y,
+                                          hitResult.worldTransform.columns.3.z)
+                
+                // Create a node (e.g., a sphere) at the touched position
+                let sphere = SCNSphere(radius: 0.01)
+                let node = SCNNode(geometry: sphere)
+                node.position = position
+                
+                sceneView.scene.rootNode.addChildNode(node)
+            }
+        }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        sceneView = ARSCNView(frame: view.bounds)
+        view.addSubview(sceneView)
         
         // Set the view's delegate
         sceneView.delegate = self
         
         // Show statistics such as fps and timing information
-        sceneView.showsStatistics = true
+        sceneView.showsStatistics = false
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        sceneView.addGestureRecognizer(tapGesture)
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        let scene = SCNScene()
         
         let button = UIButton(primaryAction: nil)
 
@@ -52,6 +80,20 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         button.frame = CGRect(x: 150, y: 200, width: 100, height: 40)
         self.view.addSubview(button)
         
+        textField.placeholder = "Enter text"
+        textField.borderStyle = .roundedRect
+        textField.delegate = self // Set the delegate if you want to handle text field events
+         
+        self.view.addSubview(textField)
+        
+        textField.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    textField.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+                    textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+                    textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+                    textField.heightAnchor.constraint(equalToConstant: 40)
+                ])
+        
         // let submitButton = UIButton(primaryAction: submit())
         
         // self.view.addSubview(submitButton)
@@ -64,10 +106,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         super.viewWillAppear(animated)
         
         // Create a session configuration
-        let configuration = ARWorldTrackingConfiguration()
+        let trackConfig = ARWorldTrackingConfiguration()
+        
+        trackConfig.planeDetection = .horizontal
+        sceneView.session.run(trackConfig)
 
-        // Run the view's session
-        sceneView.session.run(configuration)
+        sceneView.delegate = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -79,14 +123,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     // MARK: - ARSCNViewDelegate
     
-/*
     // Override to create and configure nodes for anchors added to the view's session.
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
         let node = SCNNode()
      
         return node
     }
-*/
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
@@ -102,4 +144,40 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
         
     }
+    
+    /*
+     
+     override func viewDidLoad() {
+             super.viewDidLoad()
+             
+             sceneView = ARSCNView(frame: view.bounds)
+             view.addSubview(sceneView)
+             
+             let scene = SCNScene()
+             sceneView.scene = scene
+             sceneView.delegate = self
+             
+             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+             sceneView.addGestureRecognizer(tapGesture)
+         }
+     
+     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
+             let location = gesture.location(in: sceneView)
+             let hitTestResults = sceneView.hitTest(location, types: .featurePoint)
+             
+             if let hitResult = hitTestResults.first {
+                 let position = SCNVector3(hitResult.worldTransform.columns.3.x,
+                                           hitResult.worldTransform.columns.3.y,
+                                           hitResult.worldTransform.columns.3.z)
+                 
+                 // Create a node (e.g., a sphere) at the touched position
+                 let sphere = SCNSphere(radius: 0.01)
+                 let node = SCNNode(geometry: sphere)
+                 node.position = position
+                 
+                 sceneView.scene.rootNode.addChildNode(node)
+             }
+         }
+     */
+
 }
