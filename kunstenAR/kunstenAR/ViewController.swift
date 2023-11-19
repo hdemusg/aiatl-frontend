@@ -10,10 +10,17 @@ import UIKit
 import SceneKit
 import ARKit
 import Foundation
+import AVFoundation
+import Speech
 
 class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
+    
+    @State private var name: String = ""
+    @State private var recognizedText: String = "" // Added for STT
+    private let audioEngine = AVAudioEngine()
+    private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
     
     func convertImageToByteArray(image: UIImage) -> Data? {
         return image.pngData()
@@ -97,9 +104,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                            if let json = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: Any] {
                                // Access parsed JSON values here
                                print("Parsed JSON: \(json)")
-                               let model = json["model"]!
-                               let personality = json["personality"]!
-                               self.setUpChat(model: model, personality: personality)
+                               var model: String
+                               var personality: String
+                               if let modelValue = json["model"] as? String, let personalityValue = json["personality"] as? String {
+                                   // Both values were successfully cast to String
+                                   model = modelValue
+                                   personality = personalityValue
+                                   self.setUpChat(model: model, personality: personality)
+                               } else {
+                                   // Handle the case where either 'model' or 'personality' values are not Strings or are nil
+                                   print("Failed to extract 'model' or 'personality' as String")
+                               }
                                // Example: Accessing specific keys in the JSON response
                                if let contentLength = json["Content-Length"] as? Int {
                                    print("Content-Length: \(contentLength)")
@@ -112,9 +127,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                            print("Error parsing JSON: \(error)")
                        }            } else {
                            print("Server error")
-                           let model = "rocket"
-                           let personality = "Red the Rocket is fiery and has a short fuae. Be careful not to trigger them!"
-                           self.setUpChat(model: model, personality: personality)
                        }
 
         }
@@ -122,27 +134,112 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         task.resume()
     }
     
-    let scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+    let scrollView = UIScrollView()
+    let contentView = UIView()
+    let textView = UITextView()
+    let voiceInputButton = UIButton()
     
-    scrollView.contentSize = CGSize(width: 200, height: 400)
-
-    // Add content to the scroll view
-    let contentView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 400))
+    var longPressGesture: UILongPressGestureRecognizer?
     
-    contentView.backgroundColor = .black
-
-    func setUpChat(model: Any, personality: Any) {
+    func setUpChat(model: String, personality: String) {
         print(model)
         print(personality)
-        scrollView.addSubview(contentView)
+        DispatchQueue.main.async {
+            self.clear()
+            self.removeLongPressGesture()
 
-        // Add the scroll view to your main view or view hierarchy
-        view.addSubview(scrollView)
+            switch model {
+            case "woman":
+                let sphere = SCNSphere(radius: 0.1)
+                let node = SCNNode(geometry: sphere)
+                self.sceneView.scene.rootNode.addChildNode(node)
+            case "airplane":
+                let sphere = SCNSphere(radius: 0.1)
+                let node = SCNNode(geometry: sphere)
+                self.sceneView.scene.rootNode.addChildNode(node)
+            case "bird":
+                let sphere = SCNSphere(radius: 0.1)
+                let node = SCNNode(geometry: sphere)
+                self.sceneView.scene.rootNode.addChildNode(node)
+            case "cat":
+                let sphere = SCNSphere(radius: 0.1)
+                let node = SCNNode(geometry: sphere)
+                self.sceneView.scene.rootNode.addChildNode(node)
+            case "guitar":
+                let sphere = SCNSphere(radius: 0.1)
+                let node = SCNNode(geometry: sphere)
+                self.sceneView.scene.rootNode.addChildNode(node)
+            default:
+                let sphere = SCNSphere(radius: 0.1)
+                let node = SCNNode(geometry: sphere)
+                self.sceneView.scene.rootNode.addChildNode(node)
+            }
+            // ScrollView setup
+            self.scrollView.frame = self.view.bounds
+            self.scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+            // Content View setup
+            self.contentView.frame = CGRect(x: 0, y: self.view.bounds.width - 190, width: self.view.bounds.width, height: self.view.bounds.height)
+            self.contentView.backgroundColor = .white
+
+            // Text View setup
+            self.textView.frame = CGRect(x: 20, y: self.view.bounds.width - 170, width: self.view.bounds.width - 40, height: 100)
+            self.textView.text = "Your scrollable text goes here..."
+            self.textView.isEditable = false
+
+            // Voice Input Button setup
+            self.voiceInputButton.frame = CGRect(x: 20, y: self.view.bounds.height-70, width: self.view.bounds.width - 40, height: 50)
+            self.voiceInputButton.setTitle("Tap to input voice", for: .normal)
+            self.voiceInputButton.setTitleColor(.white, for: .normal)
+            self.voiceInputButton.backgroundColor = .blue
+            self.voiceInputButton.addTarget(self, action: #selector(self.voiceInputButtonTapped), for: .touchUpInside)
+
+            // Adding views to content view
+            self.contentView.addSubview(self.textView)
+            self.contentView.addSubview(self.voiceInputButton)
+
+            // Set content size for scrolling
+            let contentHeight = self.textView.frame.maxY + 20 // Adjust this value as needed
+            self.contentView.frame.size = CGSize(width: self.view.bounds.width, height: contentHeight)
+            self.scrollView.contentSize = self.contentView.frame.size
+
+            // Add content view to scroll view
+            self.scrollView.addSubview(self.contentView)
+            self.view.addSubview(self.scrollView)
+        }
     }
     
+    func clear() {
+        drawView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+    }
+    
+    
+    
+    func addLongPressGesture() {
+        // Add the long press gesture to the scrollView
+        longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gesture:)))
+        drawView.addGestureRecognizer(longPressGesture!)
+    }
+
+    func removeLongPressGesture() {
+        DispatchQueue.main.async {
+            if let gesture = self.longPressGesture {
+                // Remove the long press gesture from the scrollView
+                self.drawView.removeGestureRecognizer(gesture)
+                self.longPressGesture = nil
+            }
+        }
+    }
+    
+    func removeDraw() {
+        DispatchQueue.main.async {
+            // Remove drawView from its superview on the main thread
+            self.drawView.removeFromSuperview()
+        }
+    }
     func chatbotPOST(name: String) {
             // URL for your endpoint
-            guard let url = URL(string: "https://b46f-128-61-50-201.ngrok-free.app/backend") else {
+            guard let url = URL(string: "https://b5c7-128-61-50-201.ngrok-free.app/backend") else {
                 print("Invalid URL")
                 return
             }
@@ -176,6 +273,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             task.resume()
         }
     
+    
     let options = ["Language", "Support", "Freeform"]
        
     let textField = UITextField()
@@ -186,33 +284,100 @@ class ViewController: UIViewController, ARSCNViewDelegate {
        
     let shapes = ["Language":"a circle.", "Support":"a heart.", "Freeform": "anything you want!"]
        
-    var currentColor = UIColor.red.cgColor
+    var currentColor = UIColor.black.cgColor
     var drawView: UIView!
     var lastPoint: CGPoint?
+    var model: String?
     
     /*
-       
-       @objc func handleTap(_ gesture: UITapGestureRecognizer) {
-               let location = gesture.location(in: sceneView)
-               let hitTestResults = sceneView.hitTest(location, types: .featurePoint)
-               
-               if let hitResult = hitTestResults.first {
-                   let position = SCNVector3(hitResult.worldTransform.columns.3.x,
-                                             hitResult.worldTransform.columns.3.y,
-                                             hitResult.worldTransform.columns.3.z)
-                   
-                   // Create a node (e.g., a sphere) at the touched position
-                   let sphere = SCNSphere(radius: 0.01)
-                   let node = SCNNode(geometry: sphere)
-                   node.position = position
-                   
-                   sceneView.scene.rootNode.addChildNode(node)
-               }
-           }
-        
-        */
+     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
+         if tappable {
+             print("tap")
+             let location = gesture.location(in: sceneView)
+             let hitTestResults = sceneView.hitTest(location, types: .featurePoint)
+             
+             if let hitResult = hitTestResults.first {
+                 let position = SCNVector3(hitResult.worldTransform.columns.3.x,
+                                           hitResult.worldTransform.columns.3.y,
+                                           hitResult.worldTransform.columns.3.z)
+                 
+                 // Create a node (e.g., a sphere) at the touched position
+                 switch model {
+                 case "woman":
+                     let sphere = SCNSphere(radius: 0.1)
+                     let node = SCNNode(geometry: sphere)
+                     node.position = position
+                     sceneView.scene.rootNode.addChildNode(node)
+                     tappable = false
+                 case "airplane":
+                     let sphere = SCNSphere(radius: 0.1)
+                     let node = SCNNode(geometry: sphere)
+                     node.position = position
+                     sceneView.scene.rootNode.addChildNode(node)
+                     tappable = false
+                 case "bird":
+                     let sphere = SCNSphere(radius: 0.1)
+                     let node = SCNNode(geometry: sphere)
+                     node.position = position
+                     sceneView.scene.rootNode.addChildNode(node)
+                     tappable = false
+                 case "cat":
+                     let sphere = SCNSphere(radius: 0.1)
+                     let node = SCNNode(geometry: sphere)
+                     node.position = position
+                     sceneView.scene.rootNode.addChildNode(node)
+                     tappable = false
+                 case "guitar":
+                     let sphere = SCNSphere(radius: 0.1)
+                     let node = SCNNode(geometry: sphere)
+                     node.position = position
+                     sceneView.scene.rootNode.addChildNode(node)
+                     tappable = false
+                 default:
+                     let sphere = SCNSphere(radius: 0.1)
+                     let node = SCNNode(geometry: sphere)
+                     node.position = position
+                     sceneView.scene.rootNode.addChildNode(node)
+                     tappable = false
+                 }
+                 // ScrollView setup
+                 scrollView.frame = view.bounds
+                 scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+                 // Content View setup
+                 contentView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
+                 contentView.backgroundColor = .white
+
+                 // Text View setup
+                 textView.frame = CGRect(x: 20, y: 20, width: view.bounds.width - 40, height: 200)
+                 textView.text = "Your scrollable text goes here..."
+                 textView.isEditable = false
+
+                 // Voice Input Button setup
+                 voiceInputButton.frame = CGRect(x: 20, y: 230, width: view.bounds.width - 40, height: 50)
+                 voiceInputButton.setTitle("Tap to input voice", for: .normal)
+                 voiceInputButton.setTitleColor(.white, for: .normal)
+                 voiceInputButton.backgroundColor = .blue
+                 voiceInputButton.addTarget(self, action: #selector(voiceInputButtonTapped), for: .touchUpInside)
+
+                 // Adding views to content view
+                 contentView.addSubview(textView)
+                 contentView.addSubview(voiceInputButton)
+
+                 // Set content size for scrolling
+                 let contentHeight = textView.frame.maxY + 20 // Adjust this value as needed
+                 contentView.frame.size = CGSize(width: view.bounds.width, height: contentHeight)
+                 scrollView.contentSize = contentView.frame.size
+
+                 // Add content view to scroll view
+                 scrollView.addSubview(contentView)
+                 view.addSubview(scrollView)
+             }
+         }
+      }
+     */
     
-    @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+    @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
             let currentPoint = gesture.location(in: drawView)
 
             switch gesture.state {
@@ -272,6 +437,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             currentColor = viewController.selectedColor.cgColor
         }
          */
+    @objc func voiceInputButtonTapped() {
+        // Implement voice input functionality here
+        // This method will be triggered when the button is tapped
+        print("Voice input button tapped!")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -290,10 +460,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 
                 //let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
                 //drawView.addGestureRecognizer(tapGesture)
+                addLongPressGesture()
                 
-                let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-                longPressGesture.minimumPressDuration = 0.03
-                drawView.addGestureRecognizer(longPressGesture)
                 
                 // Create a new scene
                 let scene = SCNScene()
@@ -418,3 +586,53 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
     }
 }
+
+/*
+ let scrollView = UIScrollView()
+     let contentView = UIView()
+     let textView = UITextView()
+     let voiceInputButton = UIButton()
+
+     override func viewDidLoad() {
+         super.viewDidLoad()
+
+         // ScrollView setup
+         scrollView.frame = view.bounds
+         scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+         // Content View setup
+         contentView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
+         contentView.backgroundColor = .white
+
+         // Text View setup
+         textView.frame = CGRect(x: 20, y: 20, width: view.bounds.width - 40, height: 200)
+         textView.text = "Your scrollable text goes here..."
+         textView.isEditable = false
+
+         // Voice Input Button setup
+         voiceInputButton.frame = CGRect(x: 20, y: 230, width: view.bounds.width - 40, height: 50)
+         voiceInputButton.setTitle("Tap to input voice", for: .normal)
+         voiceInputButton.setTitleColor(.white, for: .normal)
+         voiceInputButton.backgroundColor = .blue
+         voiceInputButton.addTarget(self, action: #selector(voiceInputButtonTapped), for: .touchUpInside)
+
+         // Adding views to content view
+         contentView.addSubview(textView)
+         contentView.addSubview(voiceInputButton)
+
+         // Set content size for scrolling
+         let contentHeight = textView.frame.maxY + 20 // Adjust this value as needed
+         contentView.frame.size = CGSize(width: view.bounds.width, height: contentHeight)
+         scrollView.contentSize = contentView.frame.size
+
+         // Add content view to scroll view
+         scrollView.addSubview(contentView)
+         view.addSubview(scrollView)
+     }
+
+     @objc func voiceInputButtonTapped() {
+         // Implement voice input functionality here
+         // This method will be triggered when the button is tapped
+         print("Voice input button tapped!")
+     }
+ */
