@@ -63,7 +63,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
         
     func sendImageToBackend(imageBytes: Data, prompt: String) {
-        let url = URL(string: "https://b46f-128-61-50-201.ngrok-free.app/backend")!
+        let url = URL(string: "https://b5c7-128-61-50-201.ngrok-free.app/backend")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         
@@ -90,15 +90,55 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 return
             }
             if let httpResponse = response as? HTTPURLResponse,
-               httpResponse.statusCode == 200 {
-                print()
-            } else {
-                print("Server error")
-            }
+               httpResponse.statusCode == 200,
+                      let responseData = data {
+                       do {
+                           // Parse JSON data
+                           if let json = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: Any] {
+                               // Access parsed JSON values here
+                               print("Parsed JSON: \(json)")
+                               let model = json["model"]!
+                               let personality = json["personality"]!
+                               self.setUpChat(model: model, personality: personality)
+                               // Example: Accessing specific keys in the JSON response
+                               if let contentLength = json["Content-Length"] as? Int {
+                                   print("Content-Length: \(contentLength)")
+                               }
+                               // Access other keys similarly...
+                           } else {
+                               print("Unable to parse JSON data")
+                           }
+                       } catch {
+                           print("Error parsing JSON: \(error)")
+                       }            } else {
+                           print("Server error")
+                           let model = "rocket"
+                           let personality = "Red the Rocket is fiery and has a short fuae. Be careful not to trigger them!"
+                           self.setUpChat(model: model, personality: personality)
+                       }
+
         }
+        
         task.resume()
     }
+    
+    let scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+    
+    scrollView.contentSize = CGSize(width: 200, height: 400)
 
+    // Add content to the scroll view
+    let contentView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 400))
+    
+    contentView.backgroundColor = .black
+
+    func setUpChat(model: Any, personality: Any) {
+        print(model)
+        print(personality)
+        scrollView.addSubview(contentView)
+
+        // Add the scroll view to your main view or view hierarchy
+        view.addSubview(scrollView)
+    }
     
     func chatbotPOST(name: String) {
             // URL for your endpoint
