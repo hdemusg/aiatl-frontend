@@ -7,26 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		99B543642B086F020085B805 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B543632B086F020085B805 /* AppDelegate.swift */; };
-		99B543662B086F020085B805 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 99B543652B086F020085B805 /* art.scnassets */; };
-		99B543682B086F020085B805 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B543672B086F020085B805 /* ViewController.swift */; };
-		99B5436B2B086F020085B805 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99B543692B086F020085B805 /* Main.storyboard */; };
-		99B5436D2B086F030085B805 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99B5436C2B086F030085B805 /* Assets.xcassets */; };
-		99B543702B086F030085B805 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99B5436E2B086F030085B805 /* LaunchScreen.storyboard */; };
+		996D93BF2B0985CA00AA8A6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996D93BE2B0985CA00AA8A6C /* AppDelegate.swift */; };
+		996D93C12B0985CA00AA8A6C /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 996D93C02B0985CA00AA8A6C /* art.scnassets */; };
+		996D93C32B0985CA00AA8A6C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996D93C22B0985CA00AA8A6C /* ViewController.swift */; };
+		996D93C62B0985CA00AA8A6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 996D93C42B0985CA00AA8A6C /* Main.storyboard */; };
+		996D93C82B0985CB00AA8A6C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 996D93C72B0985CB00AA8A6C /* Assets.xcassets */; };
+		996D93CB2B0985CB00AA8A6C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 996D93C92B0985CB00AA8A6C /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		99B543602B086F020085B805 /* skibidi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = skibidi.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		99B543632B086F020085B805 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		99B543652B086F020085B805 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
-		99B543672B086F020085B805 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		99B5436A2B086F020085B805 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		99B5436C2B086F030085B805 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		99B5436F2B086F030085B805 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		996D93BB2B0985CA00AA8A6C /* kunstenAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = kunstenAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		996D93BE2B0985CA00AA8A6C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		996D93C02B0985CA00AA8A6C /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
+		996D93C22B0985CA00AA8A6C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		996D93C52B0985CA00AA8A6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		996D93C72B0985CB00AA8A6C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		996D93CA2B0985CB00AA8A6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		99B5435D2B086F020085B805 /* Frameworks */ = {
+		996D93B82B0985CA00AA8A6C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -36,79 +36,71 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		99B543572B086F020085B805 = {
+		996D93B22B0985CA00AA8A6C = {
 			isa = PBXGroup;
 			children = (
-				99B543622B086F020085B805 /* skibidi */,
-				99B543612B086F020085B805 /* Products */,
+				996D93BD2B0985CA00AA8A6C /* kunstenAR */,
+				996D93BC2B0985CA00AA8A6C /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		99B543612B086F020085B805 /* Products */ = {
+		996D93BC2B0985CA00AA8A6C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				99B543602B086F020085B805 /* skibidi.app */,
+				996D93BB2B0985CA00AA8A6C /* kunstenAR.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		99B543622B086F020085B805 /* skibidi */ = {
+		996D93BD2B0985CA00AA8A6C /* kunstenAR */ = {
 			isa = PBXGroup;
 			children = (
-				99B543632B086F020085B805 /* AppDelegate.swift */,
-				99B543762B0924580085B805 /* Elements */,
-				99B543652B086F020085B805 /* art.scnassets */,
-				99B543672B086F020085B805 /* ViewController.swift */,
-				99B543692B086F020085B805 /* Main.storyboard */,
-				99B5436C2B086F030085B805 /* Assets.xcassets */,
-				99B5436E2B086F030085B805 /* LaunchScreen.storyboard */,
+				996D93BE2B0985CA00AA8A6C /* AppDelegate.swift */,
+				996D93C02B0985CA00AA8A6C /* art.scnassets */,
+				996D93C22B0985CA00AA8A6C /* ViewController.swift */,
+				996D93C42B0985CA00AA8A6C /* Main.storyboard */,
+				996D93C72B0985CB00AA8A6C /* Assets.xcassets */,
+				996D93C92B0985CB00AA8A6C /* LaunchScreen.storyboard */,
 			);
-			path = skibidi;
-			sourceTree = "<group>";
-		};
-		99B543762B0924580085B805 /* Elements */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Elements;
+			path = kunstenAR;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		99B5435F2B086F020085B805 /* skibidi */ = {
+		996D93BA2B0985CA00AA8A6C /* kunstenAR */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 99B543732B086F030085B805 /* Build configuration list for PBXNativeTarget "skibidi" */;
+			buildConfigurationList = 996D93CE2B0985CB00AA8A6C /* Build configuration list for PBXNativeTarget "kunstenAR" */;
 			buildPhases = (
-				99B5435C2B086F020085B805 /* Sources */,
-				99B5435D2B086F020085B805 /* Frameworks */,
-				99B5435E2B086F020085B805 /* Resources */,
+				996D93B72B0985CA00AA8A6C /* Sources */,
+				996D93B82B0985CA00AA8A6C /* Frameworks */,
+				996D93B92B0985CA00AA8A6C /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = skibidi;
-			productName = skibidi;
-			productReference = 99B543602B086F020085B805 /* skibidi.app */;
+			name = kunstenAR;
+			productName = kunstenAR;
+			productReference = 996D93BB2B0985CA00AA8A6C /* kunstenAR.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		99B543582B086F020085B805 /* Project object */ = {
+		996D93B32B0985CA00AA8A6C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
-					99B5435F2B086F020085B805 = {
+					996D93BA2B0985CA00AA8A6C = {
 						CreatedOnToolsVersion = 15.0.1;
 					};
 				};
 			};
-			buildConfigurationList = 99B5435B2B086F020085B805 /* Build configuration list for PBXProject "skibidi" */;
+			buildConfigurationList = 996D93B62B0985CA00AA8A6C /* Build configuration list for PBXProject "kunstenAR" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -116,55 +108,55 @@
 				en,
 				Base,
 			);
-			mainGroup = 99B543572B086F020085B805;
-			productRefGroup = 99B543612B086F020085B805 /* Products */;
+			mainGroup = 996D93B22B0985CA00AA8A6C;
+			productRefGroup = 996D93BC2B0985CA00AA8A6C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				99B5435F2B086F020085B805 /* skibidi */,
+				996D93BA2B0985CA00AA8A6C /* kunstenAR */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		99B5435E2B086F020085B805 /* Resources */ = {
+		996D93B92B0985CA00AA8A6C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99B543662B086F020085B805 /* art.scnassets in Resources */,
-				99B543702B086F030085B805 /* LaunchScreen.storyboard in Resources */,
-				99B5436D2B086F030085B805 /* Assets.xcassets in Resources */,
-				99B5436B2B086F020085B805 /* Main.storyboard in Resources */,
+				996D93C12B0985CA00AA8A6C /* art.scnassets in Resources */,
+				996D93CB2B0985CB00AA8A6C /* LaunchScreen.storyboard in Resources */,
+				996D93C82B0985CB00AA8A6C /* Assets.xcassets in Resources */,
+				996D93C62B0985CA00AA8A6C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		99B5435C2B086F020085B805 /* Sources */ = {
+		996D93B72B0985CA00AA8A6C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99B543682B086F020085B805 /* ViewController.swift in Sources */,
-				99B543642B086F020085B805 /* AppDelegate.swift in Sources */,
+				996D93C32B0985CA00AA8A6C /* ViewController.swift in Sources */,
+				996D93BF2B0985CA00AA8A6C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		99B543692B086F020085B805 /* Main.storyboard */ = {
+		996D93C42B0985CA00AA8A6C /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				99B5436A2B086F020085B805 /* Base */,
+				996D93C52B0985CA00AA8A6C /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		99B5436E2B086F030085B805 /* LaunchScreen.storyboard */ = {
+		996D93C92B0985CB00AA8A6C /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				99B5436F2B086F030085B805 /* Base */,
+				996D93CA2B0985CB00AA8A6C /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -172,7 +164,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		99B543712B086F030085B805 /* Debug */ = {
+		996D93CC2B0985CB00AA8A6C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -235,7 +227,7 @@
 			};
 			name = Debug;
 		};
-		99B543722B086F030085B805 /* Release */ = {
+		996D93CD2B0985CB00AA8A6C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -291,7 +283,7 @@
 			};
 			name = Release;
 		};
-		99B543742B086F030085B805 /* Debug */ = {
+		996D93CF2B0985CB00AA8A6C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -313,7 +305,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = hdemusg.skibidi;
+				PRODUCT_BUNDLE_IDENTIFIER = hdemusg.kunstenAR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -321,7 +313,7 @@
 			};
 			name = Debug;
 		};
-		99B543752B086F030085B805 /* Release */ = {
+		996D93D02B0985CB00AA8A6C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -343,7 +335,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = hdemusg.skibidi;
+				PRODUCT_BUNDLE_IDENTIFIER = hdemusg.kunstenAR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -354,25 +346,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		99B5435B2B086F020085B805 /* Build configuration list for PBXProject "skibidi" */ = {
+		996D93B62B0985CA00AA8A6C /* Build configuration list for PBXProject "kunstenAR" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				99B543712B086F030085B805 /* Debug */,
-				99B543722B086F030085B805 /* Release */,
+				996D93CC2B0985CB00AA8A6C /* Debug */,
+				996D93CD2B0985CB00AA8A6C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		99B543732B086F030085B805 /* Build configuration list for PBXNativeTarget "skibidi" */ = {
+		996D93CE2B0985CB00AA8A6C /* Build configuration list for PBXNativeTarget "kunstenAR" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				99B543742B086F030085B805 /* Debug */,
-				99B543752B086F030085B805 /* Release */,
+				996D93CF2B0985CB00AA8A6C /* Debug */,
+				996D93D02B0985CB00AA8A6C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 99B543582B086F020085B805 /* Project object */;
+	rootObject = 996D93B32B0985CA00AA8A6C /* Project object */;
 }

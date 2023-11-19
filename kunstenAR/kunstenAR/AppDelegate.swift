@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  skibidi
+//  kunstenAR
 //
-//  Created by Sumedh Garimella on 11/17/23.
+//  Created by Sumedh Garimella on 11/18/23.
 //
 
 import UIKit
@@ -11,6 +11,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
